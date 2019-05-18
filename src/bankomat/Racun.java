@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Racun {
 	
 	// stanja objekta
-	int brojRacuna;
-	String imeMusterije;
-	int stanjeRacuna = 0;
-	static ArrayList<Racun> racuni = new ArrayList<>();
+	private int brojRacuna;
+	private String imeMusterije;
+	private int stanjeRacuna = 0;
+	private static ArrayList<Racun> racuni = new ArrayList<>();
 	
 	// konsturkosti
 	Racun() {
@@ -79,6 +79,14 @@ public class Racun {
 	@Override
 	public String toString() {
 		return "BrojRacuna = " + brojRacuna + ", ime musterije = " + imeMusterije + ", stanje racuna = " + stanjeRacuna;
+	}
+
+	public int getStanjeRacuna() {
+		return stanjeRacuna;
+	}
+
+	public void setStanjeRacuna(int stanjeRacuna) {
+		this.stanjeRacuna = stanjeRacuna;
 	}
 
 }
