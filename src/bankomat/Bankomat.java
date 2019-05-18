@@ -51,8 +51,8 @@ public class Bankomat {
 		int iznosTransfera = input.nextInt();
 		
 		if (Racun.provjeraPriTransferu(brojSlalaoca, brojPrimalaca, iznosTransfera)) {
-			Racun.getRacun(brojSlalaoca).stanjeRacuna -= iznosTransfera;
-			Racun.getRacun(brojPrimalaca).stanjeRacuna += iznosTransfera;
+			Racun.getRacun(brojSlalaoca).setStanjeRacuna(Racun.getRacun(brojSlalaoca).getStanjeRacuna() - iznosTransfera);
+			Racun.getRacun(brojPrimalaca).setStanjeRacuna(Racun.getRacun(brojPrimalaca).getStanjeRacuna() + iznosTransfera);
 			System.out.println("Transfer je uspjesan.");
 		}
 		
