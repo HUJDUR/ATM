@@ -8,14 +8,14 @@ public class Bankomat {
 
 	public static void main(String[] args) {
 		
-		System.out.println("//////////ATM\\\\\\\\\\\\\\\\\\\\");
+		System.out.println(" ------------/////ATM\\\\\\\\\\------------");
 		menu();
 
 	}
 
 	public static void menu() {
 		
-		System.out.println("Koju uslugu trebate?\n 1. Kreacija racuna\n 2. Transfer novca\n 3. Ispis detalja vec postojeceg racuna");
+		System.out.println("Koju uslugu trebate?\n 1. Kreacija racuna\n 2. Transfer novca\n 3. Ispis detalja vec postojeceg racuna\n --------------------------------------");
 		int unosKorinsika = input.nextInt();
 		
 		if (unosKorinsika > 3 || unosKorinsika < 0) 
@@ -38,7 +38,10 @@ public class Bankomat {
 		String imeMusterije = input.next();
 		int stanjeRacuna = input.nextInt();
 		
-		new Racun(brojRacuna, imeMusterije, stanjeRacuna);
+		if (new Racun(brojRacuna, imeMusterije, stanjeRacuna).provjeraUnosa(brojRacuna, stanjeRacuna)) {
+			Racun.getRacuni().add(new Racun(brojRacuna, imeMusterije, stanjeRacuna));
+			System.out.println("Racun uspjesno kreiran.");
+		}
 		
 		menu();
 	}
