@@ -16,12 +16,9 @@ public class Racun {
 	}
 	
 	Racun(int brojRacuna, String imeMusterije, int stanjeRacuna) {
-		if (provjeraUnosa(brojRacuna, stanjeRacuna)) {
 			this.brojRacuna = brojRacuna;
 			this.imeMusterije = imeMusterije;
 			this.stanjeRacuna = stanjeRacuna;
-			racuni.add(this);
-		}
 	}
 	
 	// ponasanje objekta
@@ -89,4 +86,8 @@ public class Racun {
 		this.stanjeRacuna = stanjeRacuna;
 	}
 
+	public static ArrayList<Racun> getRacuni() {
+		return racuni;
+	}
+	
 }
