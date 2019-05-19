@@ -1,10 +1,12 @@
 package bankomat;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bankomat {
 	
 	static Scanner input = new Scanner(System.in);
+	static ArrayList<Racun> racuni = new ArrayList<>();
 
 	public static void main(String[] args) {
 		
@@ -38,12 +40,29 @@ public class Bankomat {
 		String imeMusterije = input.next();
 		int stanjeRacuna = input.nextInt();
 		
-		if (new Racun(brojRacuna, imeMusterije, stanjeRacuna).provjeraUnosa(brojRacuna, stanjeRacuna)) {
-			Racun.getRacuni().add(new Racun(brojRacuna, imeMusterije, stanjeRacuna));
+		if (provjeraUnosa(brojRacuna, stanjeRacuna)) {
+			racuni.add(new Racun(brojRacuna, imeMusterije, stanjeRacuna));
 			System.out.println("Racun uspjesno kreiran.");
 		}
 		
 		menu();
+	}
+	
+	public static boolean provjeraUnosa(int brojRacuna, int stanjeRacuna) {
+		
+		for (int i = 0; i < racuni.size(); i++) {
+			if (racuni.get(i).getBrojRacuna() == brojRacuna) {
+				System.out.println("Vec postoji racun sa unesenim brojem.");
+				return false;
+			}
+		}
+		
+		if (stanjeRacuna < 0 || brojRacuna < 0) {
+			System.out.println("Unos ne moze biti negativan broj.");
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public static void transferNovca() {
@@ -53,13 +72,36 @@ public class Bankomat {
 		int brojPrimalaca = input.nextInt();
 		int iznosTransfera = input.nextInt();
 		
-		if (Racun.provjeraPriTransferu(brojSlalaoca, brojPrimalaca, iznosTransfera)) {
-			Racun.getRacun(brojSlalaoca).setStanjeRacuna(Racun.getRacun(brojSlalaoca).getStanjeRacuna() - iznosTransfera);
-			Racun.getRacun(brojPrimalaca).setStanjeRacuna(Racun.getRacun(brojPrimalaca).getStanjeRacuna() + iznosTransfera);
+		if (provjeraPriTransferu(brojSlalaoca, brojPrimalaca, iznosTransfera)) {
+			getRacun(brojSlalaoca).setStanjeRacuna(getRacun(brojSlalaoca).getStanjeRacuna() - iznosTransfera);
+			getRacun(brojPrimalaca).setStanjeRacuna(getRacun(brojPrimalaca).getStanjeRacuna() + iznosTransfera);
 			System.out.println("Transfer je uspjesan.");
 		}
 		
 		menu();
+	}
+	
+	public static boolean provjeraPriTransferu(int brojSlalaoca, int brojPrimalaca, int iznosTransfera) { 
+		
+		Racun slaloc = getRacun(brojSlalaoca);
+		Racun primalac = getRacun(brojPrimalaca);
+		
+		if (slaloc == null || primalac == null) {
+			System.out.println("Uneseni profil ne postoji.");
+			return false;
+		}
+		
+		if (iznosTransfera < 0) {
+			System.out.println("Negativan unos iznosa transfera.");
+			return false;
+		}
+		
+		if (slaloc.getStanjeRacuna() <= 0) {
+			System.out.println("Nemate dovoljno novca za transfer.");
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public static void ispisDetalja() {
@@ -67,11 +109,21 @@ public class Bankomat {
 		System.out.println("Unesite broj racuna:");
 		int unosKorisnika = input.nextInt();
 		
-		if (Racun.getRacun(unosKorisnika) == null) 
+		if (getRacun(unosKorisnika) == null) 
 			System.out.println("Uneseni racun ne postoji.");
 		else
-			System.out.println(Racun.getRacun(unosKorisnika).toString());		
+			System.out.println(getRacun(unosKorisnika).toString());		
 		
 		menu();
+	}
+	
+	public static Racun getRacun(int brojRacuna) {
+		
+		for (int i = 0; i < racuni.size(); i++) {
+			if (racuni.get(i).getBrojRacuna() == brojRacuna)
+				return racuni.get(i);
+		}
+		
+		return null;
 	}
 }
