@@ -1,26 +1,23 @@
 package bankomat;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Bankomat {
 	
-	static Scanner input = new Scanner(System.in);
-	static ArrayList<Racun> racuni = new ArrayList<>();
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		
 		System.out.println(" ------------/////ATM\\\\\\\\\\------------");
+		UI.load();
 		menu();
 
 	}
 
-	public static void menu() {
+	public static void menu() throws IOException {
 		
-		System.out.println("Koju uslugu trebate?\n 1. Kreacija racuna\n 2. Transfer novca\n 3. Ispis detalja vec postojeceg racuna\n --------------------------------------");
-		int unosKorinsika = input.nextInt();
+		System.out.println("Koju uslugu trebate?\n 1. Kreacija racuna\n 2. Transfer novca\n 3. Ispis detalja vec postojeceg racuna\n 4. Zavrsavate rad sa bankomatom\n --------------------------------------");
+		int unosKorinsika = UI.input.nextInt();
 		
-		if (unosKorinsika > 3 || unosKorinsika < 0) 
+		if (unosKorinsika > 4 || unosKorinsika < 0) 
 			System.out.println("Greska. Negativan broj.");
 		
 		switch (unosKorinsika) {
@@ -30,18 +27,20 @@ public class Bankomat {
 		break;
 		case 3 : ispisDetalja();
 		break;
+		case 4 : UI.save(); System.exit(0);
+		break;
 		}
 	}
 	
-	public static void kreacijaRacuna() {
+	public static void kreacijaRacuna() throws IOException {
 		
 		System.out.println("Unesite broj racuna, vase ime i stanje na racunu:");
-		int brojRacuna = input.nextInt();
-		String imeMusterije = input.next();
-		int stanjeRacuna = input.nextInt();
+		int brojRacuna = UI.input.nextInt();
+		String imeMusterije = UI.input.next();
+		int stanjeRacuna = UI.input.nextInt();
 		
 		if (provjeraUnosa(brojRacuna, stanjeRacuna)) {
-			racuni.add(new Racun(brojRacuna, imeMusterije, stanjeRacuna));
+			UI.racuni.add(new Racun(brojRacuna, imeMusterije, stanjeRacuna));
 			System.out.println("Racun uspjesno kreiran.");
 		}
 		
@@ -50,8 +49,8 @@ public class Bankomat {
 	
 	public static boolean provjeraUnosa(int brojRacuna, int stanjeRacuna) {
 		
-		for (int i = 0; i < racuni.size(); i++) {
-			if (racuni.get(i).getBrojRacuna() == brojRacuna) {
+		for (int i = 0; i < UI.racuni.size(); i++) {
+			if (UI.racuni.get(i).getBrojRacuna() == brojRacuna) {
 				System.out.println("Vec postoji racun sa unesenim brojem.");
 				return false;
 			}
@@ -65,12 +64,12 @@ public class Bankomat {
 		return true;
 	}
 	
-	public static void transferNovca() {
+	public static void transferNovca() throws IOException {
 		
 		System.out.println("Unesite broj slalaoca, broj primalaca kao i iznos transfera:");
-		int brojSlalaoca = input.nextInt();
-		int brojPrimalaca = input.nextInt();
-		int iznosTransfera = input.nextInt();
+		int brojSlalaoca = UI.input.nextInt();
+		int brojPrimalaca = UI.input.nextInt();
+		int iznosTransfera = UI.input.nextInt();
 		
 		if (provjeraPriTransferu(brojSlalaoca, brojPrimalaca, iznosTransfera)) {
 			getRacun(brojSlalaoca).setStanjeRacuna(getRacun(brojSlalaoca).getStanjeRacuna() - iznosTransfera);
@@ -104,10 +103,10 @@ public class Bankomat {
 		return true;
 	}
 	
-	public static void ispisDetalja() {
+	public static void ispisDetalja() throws IOException {
 		
 		System.out.println("Unesite broj racuna:");
-		int unosKorisnika = input.nextInt();
+		int unosKorisnika = UI.input.nextInt();
 		
 		if (getRacun(unosKorisnika) == null) 
 			System.out.println("Uneseni racun ne postoji.");
@@ -119,9 +118,9 @@ public class Bankomat {
 	
 	public static Racun getRacun(int brojRacuna) {
 		
-		for (int i = 0; i < racuni.size(); i++) {
-			if (racuni.get(i).getBrojRacuna() == brojRacuna)
-				return racuni.get(i);
+		for (int i = 0; i < UI.racuni.size(); i++) {
+			if (UI.racuni.get(i).getBrojRacuna() == brojRacuna)
+				return UI.racuni.get(i);
 		}
 		
 		return null;
