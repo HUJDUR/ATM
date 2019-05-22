@@ -8,11 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UI {
+public class UI implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	static Scanner input = new Scanner(System.in);
 	static ArrayList<Racun> racuni = new ArrayList<>();
 	
@@ -35,15 +37,16 @@ public class UI {
 			ObjectInputStream oin = new ObjectInputStream(in);
 			
 			try {
+			
 				while(true)
 				loadRacun((Racun)oin.readObject());
-			} catch(EOFException ex) {
-				System.out.println("Doslo je do greske.");
-			}
-				
-			oin.close();
-			return true;
 			
+			} catch(EOFException ex) {}
+				
+			in.close();
+			oin.close();
+			
+			return true;
 		} else {
 			
 			@SuppressWarnings("unused")
@@ -60,11 +63,11 @@ public class UI {
 		for (int i = 0; i < racuni.size(); i++) 
 			oin.writeObject(Bankomat.getRacun(i));
 		
+		in.close();
 		oin.close();
 		
 		return true;
 	}
-		
 	
 	public static void loadRacun(Racun racun) {
 		racuni.add(racun);
