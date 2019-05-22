@@ -27,7 +27,7 @@ public class Bankomat {
 		break;
 		case 3 : ispisDetalja();
 		break;
-		case 4 : UI.save(); System.exit(0);
+		case 4 : UI.save();
 		break;
 		}
 	}

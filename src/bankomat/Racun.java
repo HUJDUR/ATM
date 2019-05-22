@@ -1,7 +1,13 @@
 package bankomat;
 
-public class Racun {
+import java.io.Serializable;
+
+public class Racun implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// stanja objekta
 	private int brojRacuna;
 	private String imeMusterije;

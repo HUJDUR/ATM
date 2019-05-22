@@ -19,7 +19,7 @@ public class UI {
 	public static boolean doesFileExist() throws IOException {
 		
 		try {
-			FileInputStream test = new FileInputStream("r  acuni.txt");
+			FileInputStream test = new FileInputStream("racuni.txt");
 			test.close();
 			return true;
 		} catch (FileNotFoundException e) {
@@ -35,10 +35,11 @@ public class UI {
 			ObjectInputStream oin = new ObjectInputStream(in);
 			
 			try {
-				
-				while (true) 
+				while(true)
 				loadRacun((Racun)oin.readObject());
-			} catch(EOFException ex) {}
+			} catch(EOFException ex) {
+				System.out.println("Doslo je do greske.");
+			}
 				
 			oin.close();
 			return true;
