@@ -61,7 +61,7 @@ public class UI implements Serializable{
 		ObjectOutputStream oin = new ObjectOutputStream(in);
 
 		for (int i = 0; i < racuni.size(); i++) 
-			oin.writeObject(Bankomat.getRacun(i));
+			oin.writeObject(Racun.getRacun(i));
 		
 		in.close();
 		oin.close();
