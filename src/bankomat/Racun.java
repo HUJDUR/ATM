@@ -39,4 +39,14 @@ public class Racun implements Serializable{
 	public int getBrojRacuna() {
 		return brojRacuna;
 	}
+	
+	public static Racun getRacun(int brojRacuna) {
+		
+		for (int i = 0; i < UI.racuni.size(); i++) {
+			if (UI.racuni.get(i).getBrojRacuna() == brojRacuna)
+				return UI.racuni.get(i);
+		}
+		
+		return null;
+	}
 }
